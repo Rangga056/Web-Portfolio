@@ -1,0 +1,61 @@
+{
+  "username": "Rangga056",
+  "alias": "Eclipse404",
+  "name": "Rangga",
+  "avatar_url": "https://avatars.githubusercontent.com/u/136163122?v=4",
+  "bio": "👋 Hi, I'm Rangga, a Fullstack Web Developer from Indonesia. Building bridges between logic and intelligence.",
+  "location": "East Jakarta, Indonesia",
+  "education": "System Information @ Universitas Nasional",
+  "stats": {
+    "repositories": 42,
+    "stars": 34,
+    "followers": 16,
+    "following": 16,
+    "commits": "1000+",
+    "prs": "150+",
+    "issues": "45"
+  },
+  "top_repositories": [
+    {
+      "name": "budget-tracking-app",
+      "stars": 12,
+      "language": "TypeScript",
+      "description": "Full end-to-end PWA budget tracking app with offline-first architecture (Dexie.js) and smart sync.",
+      "url": "https://github.com/Rangga056/budget-tracking-app"
+    },
+    {
+      "name": "airbnb-clone",
+      "stars": 8,
+      "language": "TypeScript",
+      "description": "High-fidelity Airbnb clone using Next.js 14, Clerk Auth, and Prisma ORM.",
+      "url": "https://github.com/Rangga056/airbnb-clone"
+    },
+    {
+      "name": "eclipse-summit",
+      "stars": 6,
+      "language": "TypeScript",
+      "description": "Event management platform with ticket tiering and Stripe payment integration.",
+      "url": "https://github.com/Rangga056/eclipse-summit"
+    }
+  ],
+  "public_repositories": [
+    { "name": "airbnb-clone", "stars": 1, "language": "TypeScript", "desc": "Airbnb clone using Next.js 14" },
+    { "name": "eclipse-summit", "stars": 1, "language": "TypeScript", "desc": "Event management web application" },
+    { "name": "eclipse-estate", "stars": 1, "language": "JavaScript", "desc": "Real estate web application" },
+    { "name": "budget-tracking-app", "stars": 1, "language": "TypeScript", "desc": "Web & PWA budget tracker" },
+    { "name": "survey-test", "stars": 0, "language": "TypeScript", "desc": "Survey logic testing suite" },
+    { "name": "nextjs-portfolio", "stars": 0, "language": "TypeScript", "desc": "Personal portfolio V1" },
+    { "name": "go-rest-api", "stars": 1, "language": "Go", "desc": "Backend API in Go" },
+    { "name": "python-scripts", "stars": 0, "language": "Python", "desc": "Automation utilities" },
+    { "name": "react-dashboard", "stars": 2, "language": "JavaScript", "desc": "Admin UI template" },
+    { "name": "dutrans", "stars": 1, "language": "JavaScript", "desc": "Automation pipeline" },
+    { "name": "analisa-mbg", "stars": 0, "language": "Jupyter Notebook", "desc": "Data research" },
+    { "name": "cuaca_frenda", "stars": 0, "language": "JavaScript", "desc": "Weather app implementation" }
+  ],
+  "languages": [
+    { "name": "TypeScript", "percent": 55 },
+    { "name": "JavaScript", "percent": 20 },
+    { "name": "Go", "percent": 15 },
+    { "name": "Python", "percent": 10 }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "programming_languages": [
+    "JavaScript",
+    "TypeScript",
+    "NodeJS",
+    "HTML",
+    "CSS",
+    "SQL",
+    "Go",
+    "Python"
+  ],
+  "frameworks_and_databases": [
+    "Next.js",
+    "React",
+    "TailwindCSS",
+    "Go Fiber",
+    "ExpressJS",
+    "Firebase",
+    "MongoDB",
+    "Supabase",
+    "MySQL",
+    "PostgreSQL",
+    "Bootstrap"
+  ],
+  "tools": [
+    "GitHub Actions",
+    "Docker",
+    "n8n Automation",
+    "Vercel",
+    "Postman",
+    "ShadcnUI",
+    "Prisma",
+    "Zod",
+    "Git",
+    "Github",
+    "GitLab",
+    "VS Code",
+    "NeoVim"
+  ],
+  "languages": [
+    { "name": "Bahasa Indonesia", "level": "Native" },
+    { "name": "Bahasa Inggris", "level": "Proficient" }
+  ]
+}
