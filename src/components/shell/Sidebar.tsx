@@ -58,7 +58,10 @@ export const Sidebar = () => {
   };
 
   return (
-    <aside className="flex h-full border-r border-ide-border bg-ide-sidebar z-30">
+    <aside className={cn(
+      "h-full border-r border-ide-border bg-ide-sidebar z-50 md:z-30 flex md:relative",
+      isSidebarOpen ? "absolute top-0 left-0" : "hidden md:flex"
+    )}>
       {/* Activity Bar */}
       <div className="w-16 flex flex-col items-center py-4 border-r border-ide-border bg-black/20 shrink-0">
         <div className="mb-6">

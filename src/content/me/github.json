@@ -17,40 +17,134 @@
   },
   "top_repositories": [
     {
+      "name": "ultimate-portofolio",
+      "stars": 5,
+      "language": "TypeScript",
+      "description": "Functional IDE-inspired developer portfolio with integrated terminal, shell context, and multi-theme support.",
+      "url": "https://github.com/Rangga056/ultimate-portofolio",
+      "image": "/portfolio-homepage.png",
+      "layout": "desktop"
+    },
+    {
       "name": "budget-tracking-app",
       "stars": 12,
       "language": "TypeScript",
       "description": "Full end-to-end PWA budget tracking app with offline-first architecture (Dexie.js) and smart sync.",
-      "url": "https://github.com/Rangga056/budget-tracking-app"
+      "url": "https://github.com/Rangga056/budget-tracking-app",
+      "image": "https://raw.githubusercontent.com/Rangga056/budget-tracking-app/main/client/public/screenshots/dashboard-page-desktop.png",
+      "layout": "desktop"
     },
     {
       "name": "airbnb-clone",
       "stars": 8,
       "language": "TypeScript",
       "description": "High-fidelity Airbnb clone using Next.js 14, Clerk Auth, and Prisma ORM.",
-      "url": "https://github.com/Rangga056/airbnb-clone"
+      "url": "https://github.com/Rangga056/airbnb-clone",
+      "image": "https://github.com/Rangga056/airbnb-clone/assets/136163122/d7f64e59-450c-403c-b068-71db1b6c6d4a",
+      "layout": "desktop"
     },
     {
-      "name": "eclipse-summit",
-      "stars": 6,
+      "name": "n8n-nodes-screenshotone",
+      "stars": 4,
       "language": "TypeScript",
-      "description": "Event management platform with ticket tiering and Stripe payment integration.",
-      "url": "https://github.com/Rangga056/eclipse-summit"
+      "description": "Custom n8n community node for automated website screenshots and PDF generation via ScreenshotOne API.",
+      "url": "https://github.com/Rangga056/n8n-nodes-screenshotone",
+      "image": "https://n8n.io/static/templates/previews/1647.png",
+      "layout": "desktop"
     }
   ],
   "public_repositories": [
-    { "name": "airbnb-clone", "stars": 1, "language": "TypeScript", "desc": "Airbnb clone using Next.js 14" },
-    { "name": "eclipse-summit", "stars": 1, "language": "TypeScript", "desc": "Event management web application" },
-    { "name": "eclipse-estate", "stars": 1, "language": "JavaScript", "desc": "Real estate web application" },
-    { "name": "budget-tracking-app", "stars": 1, "language": "TypeScript", "desc": "Web & PWA budget tracker" },
-    { "name": "survey-test", "stars": 0, "language": "TypeScript", "desc": "Survey logic testing suite" },
-    { "name": "nextjs-portfolio", "stars": 0, "language": "TypeScript", "desc": "Personal portfolio V1" },
-    { "name": "go-rest-api", "stars": 1, "language": "Go", "desc": "Backend API in Go" },
-    { "name": "python-scripts", "stars": 0, "language": "Python", "desc": "Automation utilities" },
-    { "name": "react-dashboard", "stars": 2, "language": "JavaScript", "desc": "Admin UI template" },
-    { "name": "dutrans", "stars": 1, "language": "JavaScript", "desc": "Automation pipeline" },
-    { "name": "analisa-mbg", "stars": 0, "language": "Jupyter Notebook", "desc": "Data research" },
-    { "name": "cuaca_frenda", "stars": 0, "language": "JavaScript", "desc": "Weather app implementation" }
+    { 
+      "name": "ultimate-portofolio", 
+      "stars": 5, 
+      "language": "TypeScript", 
+      "description": "Interactive IDE Shell Portfolio",
+      "url": "https://github.com/Rangga056/ultimate-portofolio"
+    },
+    { 
+      "name": "airbnb-clone", 
+      "stars": 1, 
+      "language": "TypeScript", 
+      "description": "Airbnb clone using Next.js 14",
+      "url": "https://github.com/Rangga056/airbnb-clone"
+    },
+    { 
+      "name": "eclipse-summit", 
+      "stars": 1, 
+      "language": "TypeScript", 
+      "description": "Event management web application",
+      "url": "https://github.com/Rangga056/eclipse-summit"
+    },
+    { 
+      "name": "eclipse-estate", 
+      "stars": 1, 
+      "language": "JavaScript", 
+      "description": "Real estate web application",
+      "url": "https://github.com/Rangga056/eclipse-estate"
+    },
+    { 
+      "name": "budget-tracking-app", 
+      "stars": 1, 
+      "language": "TypeScript", 
+      "description": "Web & PWA budget tracker",
+      "url": "https://github.com/Rangga056/budget-tracking-app"
+    },
+    { 
+      "name": "survey-test", 
+      "stars": 0, 
+      "language": "TypeScript", 
+      "description": "Survey logic testing suite",
+      "url": "https://github.com/Rangga056/survey-test"
+    },
+    { 
+      "name": "nextjs-portfolio", 
+      "stars": 0, 
+      "language": "TypeScript", 
+      "description": "Personal portfolio V1",
+      "url": "https://github.com/Rangga056/nextjs-portfolio"
+    },
+    { 
+      "name": "go-rest-api", 
+      "stars": 1, 
+      "language": "Go", 
+      "description": "Backend API in Go",
+      "url": "https://github.com/Rangga056/go-rest-api"
+    },
+    { 
+      "name": "python-scripts", 
+      "stars": 0, 
+      "language": "Python", 
+      "description": "Automation utilities",
+      "url": "https://github.com/Rangga056/python-scripts"
+    },
+    { 
+      "name": "react-dashboard", 
+      "stars": 2, 
+      "language": "JavaScript", 
+      "description": "Admin UI template",
+      "url": "https://github.com/Rangga056/react-dashboard"
+    },
+    { 
+      "name": "dutrans", 
+      "stars": 1, 
+      "language": "JavaScript", 
+      "description": "Automation pipeline",
+      "url": "https://github.com/Rangga056/dutrans"
+    },
+    { 
+      "name": "analisa-mbg", 
+      "stars": 0, 
+      "language": "Jupyter Notebook", 
+      "description": "Data research",
+      "url": "https://github.com/Rangga056/analisa-mbg"
+    },
+    { 
+      "name": "cuaca_frenda", 
+      "stars": 0, 
+      "language": "JavaScript", 
+      "description": "Weather app implementation",
+      "url": "https://github.com/Rangga056/cuaca_frenda"
+    }
   ],
   "languages": [
     { "name": "TypeScript", "percent": 55 },

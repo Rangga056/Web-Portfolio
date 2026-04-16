@@ -7,6 +7,7 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Typography } from '@/components/ui/Typography';
 import { Box } from '@/components/ui/Box';
 import { Code2, ExternalLink } from 'lucide-react';
+import { cn } from "@/lib/utils";
 
 export const MarkdownRenderer = ({ 
   content, 
@@ -20,7 +21,9 @@ export const MarkdownRenderer = ({
   const location = typeof frontmatter.location === 'string' ? frontmatter.location : null;
   const tech = Array.isArray(frontmatter.tech) ? (frontmatter.tech as string[]) : null;
   const githubUrl = typeof frontmatter.github_url === 'string' ? frontmatter.github_url : null;
-  const imageUrl = typeof frontmatter.image_url === 'string' ? frontmatter.image_url : null;
+  const images = Array.isArray(frontmatter.images) 
+    ? (frontmatter.images as { url: string; caption?: string; layout?: "mobile" | "desktop" }[]) 
+    : (typeof frontmatter.image_url === 'string' ? [{ url: frontmatter.image_url }] : []);
 
   return (
     <div className="max-w-5xl mx-auto py-8 md:py-12 px-6 md:px-8">
@@ -50,14 +53,42 @@ export const MarkdownRenderer = ({
             )}
           </div>
 
-          {imageUrl && (
-            <div className="rounded-xl overflow-hidden border border-ide-border shadow-2xl mb-8 md:mb-10 group relative aspect-video">
-               <img 
-                 src={imageUrl} 
-                 alt={title} 
-                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700" 
-               />
-               <div className="absolute inset-0 bg-gradient-to-t from-ide-bg via-transparent to-transparent opacity-60" />
+          {images.length > 0 && (
+            <div className="space-y-6 mb-10 md:mb-16">
+               <div className={cn(
+                 "grid gap-6",
+                 images.length === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"
+               )}>
+                 {images.map((img, idx) => (
+                   <div 
+                     key={idx} 
+                     className={cn(
+                       "group relative rounded-xl overflow-hidden border border-ide-border bg-black/40 shadow-2xl transition-all hover:border-tokyo-blue/40",
+                       // If only one image and it's likely a mobile screenshot (tall), don't force aspect-video
+                       images.length === 1 ? "min-h-[400px]" : "aspect-video"
+                     )}
+                   >
+                     <img 
+                       src={img.url} 
+                       alt={img.caption || title} 
+                       className={cn(
+                         "w-full h-full transition-all duration-700 group-hover:scale-[1.03]",
+                         img.layout === "mobile" || img.url.includes('mobile') 
+                           ? "object-contain bg-ide-bg/80 p-4" 
+                           : "object-cover opacity-80 group-hover:opacity-100"
+                       )} 
+                     />
+                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                     {img.caption && (
+                       <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform bg-black/60 backdrop-blur-md border-t border-ide-border">
+                         <Typography variant="muted" className="text-[10px] uppercase tracking-widest font-bold text-white">
+                           {img.caption}
+                         </Typography>
+                       </div>
+                     )}
+                   </div>
+                 ))}
+               </div>
             </div>
           )}
           

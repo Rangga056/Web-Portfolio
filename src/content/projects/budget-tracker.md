@@ -1,31 +1,40 @@
 ---
 title: "BudgetFlow: PWA Tracking App"
-tech: ["TypeScript", "Next.js", "Go", "PostgreSQL", "Dexie.js", "Recharts", "Docker"]
+tech: ["Next.js 16", "Go Fiber", "PostgreSQL 16", "TypeScript", "Dexie.js", "Recharts", "Docker", "Bun"]
 type: "PWA / Fullstack"
 github_url: "https://github.com/Rangga056/budget-tracking-app"
-image_url: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=1200"
+images:
+  - url: "https://raw.githubusercontent.com/Rangga056/budget-tracking-app/main/client/public/screenshots/landing-page-desktop.png"
+    caption: "Landing Page - Desktop Experience"
+  - url: "https://raw.githubusercontent.com/Rangga056/budget-tracking-app/main/client/public/screenshots/dashboard-page-desktop.png"
+    caption: "Financial Dashboard - Real-time Analytics"
+  - url: "https://raw.githubusercontent.com/Rangga056/budget-tracking-app/main/client/public/screenshots/transaction-page-mobile.png"
+    caption: "Mobile Interface - Transaction Management"
+  - url: "https://raw.githubusercontent.com/Rangga056/budget-tracking-app/main/client/public/screenshots/add-transaction-mobile.png"
+    caption: "Mobile View - Quick Transaction Entry"
 ---
 
 ### Project Overview
 **BudgetFlow** is a professional-grade financial management tool engineered for high reliability and accessibility. It features a robust **Offline-First Architecture**, allowing users to log transactions without an internet connection, which then automatically syncs once connectivity is restored.
 
-### Key Features
+### ✨ Key Features
 - **Offline-First Engine:** Powered by **IndexedDB (Dexie.js)** for local transaction logging and immediate UI feedback.
-- **Smart Sync Queue:** Automatically detects network restoration and syncs pending local writes to the backend server.
-- **Analytics Dashboard:** Visual financial health summaries using **Recharts** (Pie and Line charts).
-- **Transaction Intel:** Filterable history with support for receipt image attachments and metadata.
-- **Category Management:** Customizable, color-coded, and icon-tagged categories for granular tracking.
+- **Smart Sync Queue:** Automatically detects network restoration and syncs pending local writes to the backend server with conflict resolution.
+- **Analytics Dashboard:** Visual financial health summaries using **Recharts** (Pie and Line charts) for data-driven insights.
+- **Transaction Intel:** Full management system with support for filtering, browsing, and receipt image attachments.
+- **Category Management:** Customizable, color-coded, and icon-tagged categories for granular tracking of income and expenses.
 - **Secure Auth Flow:** Implements HTTPOnly JWT cookies, email verification, and secure password reset.
-- **Editorial-Grade UI:** Minimalist modern design with glassmorphic elements and staggered animations.
-- **Docker-Ready:** Orchestrated setup for PostgreSQL, Go API, and Next.js frontend.
+- **Modern UI/UX:** Minimalist design system with dark mode support, glassmorphic elements, and staggered animations.
+- **Docker-Ready:** Simplified deployment using Docker Compose for the frontend, backend, and database.
 
-### Technical Deep Dive
-The system is built with a **modular Go backend** handling high-performance API requests and a **Next.js 14 frontend** for a seamless user experience.
+### 🛠️ Technical Deep Dive
+The system is built with a **high-performance Go Fiber backend** and a **Next.js 16 (App Router) frontend** running on the **Bun runtime**.
 
 #### Architecture Highlights
 - **Service Workers:** Enables full PWA capabilities, making the app installable on iOS and Android.
-- **Sync Conflict Resolution:** Implemented logic to handle data merging during multi-device synchronization.
+- **Frontend Stack:** Leverages **@tanstack/react-form** and **Zod** for robust state and form validation.
+- **Backend Stack:** Uses **PostgreSQL 16** with the **pgx driver** for reliable data persistence.
 
 ### Results
-- Delivered a high-performance application with **< 1s initial load time**.
+- Delivered a high-performance application with optimized load times and offline reliability.
 - Enabled 100% data integrity during intermittent connectivity via the custom sync engine.

@@ -183,25 +183,70 @@ export const JsonRenderer = ({ content }: { content: string }) => {
             <Star className="w-3 h-3 text-tokyo-yellow" />
             Featured Repositories
           </Typography>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {data.top_repositories?.map((repo: any) => (
-              <Box key={repo.name} variant="bordered" className="bg-black/20 hover:border-tokyo-blue/40 transition-colors p-5 rounded-xl space-y-3">
-                <div className="flex justify-between items-start">
-                  <Typography variant="body" className="font-bold text-zinc-100">{repo.name}</Typography>
-                  <div className="flex items-center gap-1 text-tokyo-yellow">
-                    <Star className="w-3 h-3 fill-current" />
-                    <span className="text-[10px] font-mono">{repo.stars}</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {data.top_repositories?.map((repo: any) => {
+              const projectTab = getProjectTab(repo.name);
+              return (
+                <Box key={repo.name} variant="bordered" className="bg-black/20 hover:border-tokyo-blue/40 transition-all p-0 rounded-xl space-y-0 overflow-hidden group flex flex-col">
+                  {repo.image && (
+                    <div className="w-full aspect-video overflow-hidden border-b border-ide-border relative bg-ide-bg/50">
+                      <img 
+                        src={repo.image} 
+                        alt={repo.name} 
+                        className={cn(
+                          "w-full h-full transition-transform duration-500 group-hover:scale-105",
+                          repo.layout === "mobile" || (repo.image && repo.image.includes('mobile')) ? "object-contain p-2" : "object-cover"
+                        )}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span className="text-[10px] text-white font-mono flex items-center gap-1">
+                          <Eye className="w-3 h-3" /> Previewing Workspace
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  <div className="p-5 flex-1 flex flex-col space-y-3">
+                    <div className="flex justify-between items-start">
+                      <Typography variant="body" className="font-bold text-zinc-100">{repo.name}</Typography>
+                      <div className="flex items-center gap-1 text-tokyo-yellow">
+                        <Star className="w-3 h-3 fill-current" />
+                        <span className="text-[10px] font-mono">{repo.stars}</span>
+                      </div>
+                    </div>
+                    <Typography variant="muted" className="text-xs line-clamp-2 h-10">{repo.description}</Typography>
+                    
+                    <div className="flex items-center gap-4 pt-2 mt-auto">
+                      <span className="text-[9px] font-mono text-tokyo-blue uppercase font-bold shrink-0">{repo.language}</span>
+                      
+                      <div className="flex-1 flex justify-end items-center gap-3">
+                        {projectTab && (
+                          <button 
+                            onClick={() => setActiveTab({
+                              id: projectTab.id,
+                              label: projectTab.label,
+                              path: projectTab.path,
+                              type: projectTab.type as any
+                            })}
+                            className="text-[10px] font-bold text-tokyo-cyan hover:text-white flex items-center gap-1 transition-colors uppercase tracking-widest"
+                          >
+                            View Buffer
+                          </button>
+                        )}
+                        <a 
+                          href={repo.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-zinc-500 hover:text-tokyo-blue transition-colors p-1.5 hover:bg-tokyo-blue/10 rounded-lg"
+                          title="Open on GitHub"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <Typography variant="muted" className="text-xs line-clamp-2 h-10">{repo.description}</Typography>
-                <div className="flex justify-between items-center pt-2">
-                  <span className="text-[9px] font-mono text-tokyo-blue uppercase">{repo.language}</span>
-                  <a href={repo.url} target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white transition-colors">
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </Box>
-            ))}
+                </Box>
+              );
+            })}
           </div>
         </div>
 
@@ -339,10 +384,10 @@ export const JsonRenderer = ({ content }: { content: string }) => {
                         variant="muted"
                         className="text-[10px] truncate max-w-[300px]"
                       >
-                        {repo.desc || "Technical source buffer."}
+                        {repo.description || "Technical source buffer."}
                       </Typography>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex items-center gap-3">
                       {projectTab && (
                         <button
                           onClick={() =>
@@ -353,18 +398,19 @@ export const JsonRenderer = ({ content }: { content: string }) => {
                               type: projectTab.type as any,
                             })
                           }
-                          className="px-2 py-1 bg-tokyo-blue/10 text-tokyo-blue text-[9px] font-bold rounded border border-tokyo-blue/20 hover:bg-tokyo-blue/20 transition-all uppercase"
+                          className="px-2.5 py-1 bg-tokyo-blue/10 text-tokyo-blue text-[9px] font-bold rounded border border-tokyo-blue/20 hover:bg-tokyo-blue/20 transition-all uppercase tracking-widest"
                         >
-                          Project_Link
+                          VIEW_BUFFER
                         </button>
                       )}
                       <a
                         href={repo.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 text-zinc-600 hover:text-white transition-colors"
+                        className="p-1.5 text-zinc-600 hover:text-tokyo-blue transition-colors hover:bg-tokyo-blue/10 rounded-lg"
+                        title="View Repository"
                       >
-                        <ExternalLink className="w-3.5 h-3.5" />
+                        <ExternalLink className="w-4 h-4" />
                       </a>
                     </div>
                   </div>

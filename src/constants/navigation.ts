@@ -34,7 +34,7 @@ export const NAVIGATION_TREE: NavItem[] = [
       { id: "summit", label: "eclipse-summit.md", type: "markdown", path: "projects/eclipse-summit.md" },
       { id: "sentiment", label: "sentiment-dashboard.md", type: "markdown", path: "projects/sentiment-dashboard.md" },
       { id: "automation", label: "ai-automation.md", type: "markdown", path: "projects/automation.md" },
-      { id: "fullstack", label: "fullstack-app.md", type: "markdown", path: "projects/fullstack.md" },
+      { id: "portfolio", label: "ultimate-portfolio.md", type: "markdown", path: "projects/ultimate-portfolio.md" },
     ],
   },
   {
