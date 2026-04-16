@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 interface TextProps extends React.HTMLAttributes<HTMLElement> {
-  as?: "h1" | "h2" | "h3" | "h4" | "p" | "span" | "code";
+  as?: "h1" | "h2" | "h3" | "h4" | "p" | "span" | "code" | "div";
   variant?: "title" | "subtitle" | "body" | "code" | "muted";
 }
 
