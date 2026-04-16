@@ -7,7 +7,7 @@ import {
   Terminal, Code, Play, RefreshCw, Cpu, Plus, Minus, Zap, 
   Database, Settings2, Activity, X, BarChart3, Scan, Globe2,
   MousePointer2, Palette, FastForward, Sliders, Info, 
-  Eye, Brain, Layers, Navigation2, Command, Volume2
+  Eye, Brain, Layers, Navigation2, Command, Volume2, ShieldCheck
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -682,12 +682,544 @@ const SpatialEngine = () => {
   );
 };
 
+// --- Vector Database Visualizer ---
+const VectorDatabaseEngine = () => {
+  const [query, setQuery] = useState("");
+  const [searching, setSearching] = useState(false);
+  const [results, setResults] = useState<{ id: number; score: number }[]>([]);
+
+  const points = useMemo(() => Array.from({ length: 40 }).map((_, i) => ({
+    id: i,
+    x: Math.random() * 80 + 10,
+    y: Math.random() * 80 + 10,
+    vec: [Math.random(), Math.random(), Math.random()]
+  })), []);
+
+  const handleSearch = () => {
+    setSearching(true);
+    setResults([]);
+    setTimeout(() => {
+      const newResults = points
+        .map(p => ({ id: p.id, score: Math.random() * 0.3 + 0.7 }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5);
+      setResults(newResults);
+      setSearching(false);
+    }, 1500);
+  };
+
+  return (
+    <div className="w-full h-full flex flex-col p-6 bg-black/40">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-tokyo-blue/10 border border-tokyo-blue/20 rounded-lg">
+            <Database className="w-5 h-5 text-tokyo-blue" />
+          </div>
+          <div className="text-left">
+            <div className="text-xs font-bold text-white uppercase tracking-widest">Vector_Space_Index</div>
+            <div className="text-[9px] font-mono text-zinc-500">Dimensions: 1536 (text-embedding-3-small)</div>
+          </div>
+        </div>
+        <div className="flex gap-2">
+           <input 
+             value={query}
+             onChange={(e) => setQuery(e.target.value)}
+             placeholder="Query vector space..."
+             className="bg-black/40 border border-white/10 rounded-lg px-3 py-1.5 text-[10px] text-zinc-300 outline-none focus:border-tokyo-blue transition-all w-48"
+           />
+           <button 
+             onClick={handleSearch}
+             disabled={searching || !query}
+             className="px-4 py-1.5 bg-tokyo-blue text-ide-bg rounded-lg font-black text-[10px] hover:bg-tokyo-cyan transition-all disabled:opacity-30 flex items-center gap-2"
+           >
+             {searching ? <RefreshCw className="w-3 h-3 animate-spin" /> : <Search className="w-3 h-3" />} SEARCH
+           </button>
+        </div>
+      </div>
+
+      <div className="flex-1 relative border border-white/5 rounded-xl bg-zinc-950/50 overflow-hidden">
+        {/* Vector Point Cloud */}
+        <div className="absolute inset-0 p-8">
+          {points.map((p) => {
+            const isResult = results.some(r => r.id === p.id);
+            const score = results.find(r => r.id === p.id)?.score;
+            
+            return (
+              <motion.div
+                key={p.id}
+                className={cn(
+                  "absolute w-1.5 h-1.5 rounded-full transition-all duration-500",
+                  isResult ? "bg-tokyo-cyan shadow-[0_0_15px_#7dcfff] scale-150 z-10" : "bg-white/10"
+                )}
+                style={{ left: `${p.x}%`, top: `${p.y}%` }}
+                animate={isResult ? { scale: [1.5, 2, 1.5] } : {}}
+                transition={{ repeat: Infinity, duration: 2 }}
+              >
+                {isResult && (
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-tokyo-cyan text-black text-[7px] font-bold px-1 rounded">
+                    {score?.toFixed(4)}
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+        
+        {searching && (
+          <motion.div 
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1.5, opacity: 0.2 }}
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          >
+            <div className="w-64 h-64 border-2 border-tokyo-blue rounded-full animate-ping" />
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// --- Kubernetes Chaos Engine ---
+const KubernetesChaosEngine = () => {
+  const [pods, setPods] = useState(Array.from({ length: 12 }).map((_, i) => ({
+    id: i,
+    status: "running" as "running" | "terminating" | "pending",
+    restarts: 0
+  })));
+  const [isChaosActive, setIsChaosActive] = useState(false);
+
+  const killPod = (id: number) => {
+    setPods(prev => prev.map(p => p.id === id ? { ...p, status: "terminating" } : p));
+    setTimeout(() => {
+      setPods(prev => prev.map(p => p.id === id ? { ...p, status: "pending" } : p));
+      setTimeout(() => {
+        setPods(prev => prev.map(p => p.id === id ? { ...p, status: "running", restarts: p.restarts + 1 } : p));
+      }, 2000);
+    }, 1500);
+  };
+
+  useEffect(() => {
+    if (!isChaosActive) return;
+    const interval = setInterval(() => {
+      const healthyPods = pods.filter(p => p.status === "running");
+      if (healthyPods.length > 0) {
+        const randomPod = healthyPods[Math.floor(Math.random() * healthyPods.length)];
+        killPod(randomPod.id);
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isChaosActive, pods]);
+
+  return (
+    <div className="w-full h-full flex flex-col p-6 bg-black/40">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-tokyo-purple/10 border border-tokyo-purple/20 rounded-lg">
+            <Layers className="w-5 h-5 text-tokyo-purple" />
+          </div>
+          <div className="text-left">
+            <div className="text-xs font-bold text-white uppercase tracking-widest">K8S_ORCHESTRATION_CLUSTER</div>
+            <div className="text-[9px] font-mono text-zinc-500">Namespace: default | Context: production-us-east</div>
+          </div>
+        </div>
+        <button 
+          onClick={() => setIsChaosActive(!isChaosActive)}
+          className={cn(
+            "px-5 py-2 rounded-lg font-black text-[10px] transition-all flex items-center gap-2",
+            isChaosActive ? "bg-tokyo-red text-white animate-pulse" : "bg-white/5 border border-white/10 text-zinc-500 hover:text-white"
+          )}
+        >
+          <Zap className="w-3.5 h-3.5" /> {isChaosActive ? "STOP_CHAOS_MONKEY" : "START_CHAOS_MONKEY"}
+        </button>
+      </div>
+
+      <div className="flex-1 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 content-start">
+        {pods.map((pod) => (
+          <motion.div 
+            key={pod.id}
+            onClick={() => pod.status === "running" && killPod(pod.id)}
+            className={cn(
+              "p-3 rounded-xl border transition-all cursor-pointer group relative",
+              pod.status === "running" ? "bg-tokyo-green/5 border-tokyo-green/20 hover:border-tokyo-green/50" :
+              pod.status === "terminating" ? "bg-tokyo-red/5 border-tokyo-red/20 opacity-50" :
+              "bg-tokyo-yellow/5 border-tokyo-yellow/20 animate-pulse"
+            )}
+            whileHover={{ y: -2 }}
+          >
+            <div className="flex justify-between items-start mb-2">
+               <Cpu className={cn(
+                 "w-4 h-4",
+                 pod.status === "running" ? "text-tokyo-green" :
+                 pod.status === "terminating" ? "text-tokyo-red" : "text-tokyo-yellow"
+               )} />
+               <span className="text-[7px] font-mono text-zinc-600">v1.2</span>
+            </div>
+            <div className="text-[8px] font-bold text-zinc-300 truncate mb-1">pod-idx-{pod.id}</div>
+            <div className="flex items-center gap-1.5">
+               <div className={cn(
+                 "w-1 h-1 rounded-full",
+                 pod.status === "running" ? "bg-tokyo-green shadow-[0_0_5px_#9ece6a]" :
+                 pod.status === "terminating" ? "bg-tokyo-red" : "bg-tokyo-yellow"
+               )} />
+               <span className="text-[7px] uppercase font-bold text-zinc-500">{pod.status}</span>
+            </div>
+            {pod.restarts > 0 && (
+              <div className="absolute -top-1 -right-1 bg-tokyo-red text-[6px] text-white px-1 rounded-full font-bold">
+                {pod.restarts}
+              </div>
+            )}
+            <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl">
+               <span className="text-[7px] font-black text-white uppercase tracking-tighter">SIGKILL</span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="mt-6 p-4 bg-black/40 rounded-xl border border-white/5 flex justify-between items-center">
+         <div className="flex gap-8">
+            <div>
+               <div className="text-[7px] text-zinc-600 uppercase font-bold mb-1">Total Pods</div>
+               <div className="text-xs font-mono text-zinc-300">12</div>
+            </div>
+            <div>
+               <div className="text-[7px] text-zinc-600 uppercase font-bold mb-1">Healthy</div>
+               <div className="text-xs font-mono text-tokyo-green">{pods.filter(p => p.status === "running").length}</div>
+            </div>
+            <div>
+               <div className="text-[7px] text-zinc-600 uppercase font-bold mb-1">Restarts</div>
+               <div className="text-xs font-mono text-tokyo-red">{pods.reduce((acc, p) => acc + p.restarts, 0)}</div>
+            </div>
+         </div>
+         <div className="text-right">
+            <div className="text-[8px] font-mono text-zinc-500 uppercase">Self-Healing: <span className="text-tokyo-green">ACTIVE</span></div>
+            <div className="text-[8px] font-mono text-zinc-500 uppercase">Load-Balancer: <span className="text-tokyo-cyan">WAITING</span></div>
+         </div>
+      </div>
+    </div>
+  );
+};
+
+const Search = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+);
+
+// --- B-Tree / Database Index Visualizer ---
+const BTreeEngine = () => {
+  const [nodes, setNodes] = useState<{ id: number; val: number }[]>([]);
+  const [inputValue, setInput] = useState("");
+  const [searchType, setSearchType] = useState<"linear" | "index">("index");
+  const [isSearching, setIsSearching] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  const insertNode = () => {
+    const val = parseInt(inputValue);
+    if (isNaN(val)) return;
+    const newNode = { id: Date.now(), val };
+    setNodes(prev => [...prev, newNode].sort((a, b) => a.val - b.val));
+    setInput("");
+  };
+
+  const handleSearch = async () => {
+    setIsSearching(true);
+    setActiveIndex(-1);
+    const target = parseInt(inputValue);
+    
+    if (searchType === "linear") {
+      for (let i = 0; i < nodes.length; i++) {
+        setActiveIndex(i);
+        await new Promise(r => setTimeout(r, 100));
+        if (nodes[i].val === target) break;
+      }
+    } else {
+      let low = 0, high = nodes.length - 1;
+      while (low <= high) {
+        let mid = Math.floor((low + high) / 2);
+        setActiveIndex(mid);
+        await new Promise(r => setTimeout(r, 400));
+        if (nodes[mid].val === target) break;
+        if (nodes[mid].val < target) low = mid + 1;
+        else high = mid - 1;
+      }
+    }
+    setIsSearching(false);
+  };
+
+  return (
+    <div className="w-full h-full flex flex-col p-6 bg-black/40">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-tokyo-blue/10 border border-tokyo-blue/20 rounded-lg">
+            <Database className="w-5 h-5 text-tokyo-blue" />
+          </div>
+          <div className="text-left">
+            <div className="text-xs font-bold text-white uppercase tracking-widest">B-Tree_Index_Buffer</div>
+            <div className="text-[9px] font-mono text-zinc-500">Engine: InnoDB | Page_Size: 16KB</div>
+          </div>
+        </div>
+        <div className="flex gap-2">
+           <input 
+             value={inputValue}
+             onChange={(e) => setInput(e.target.value)}
+             placeholder="Insert key..."
+             className="bg-black/40 border border-white/10 rounded-lg px-3 py-1.5 text-[10px] text-zinc-300 outline-none focus:border-tokyo-blue transition-all w-24"
+           />
+           <button onClick={insertNode} className="p-1.5 bg-white/5 border border-white/10 rounded-lg hover:text-white transition-all"><Plus className="w-4 h-4" /></button>
+           <div className="h-8 w-[1px] bg-white/10 mx-1" />
+           <select 
+             value={searchType}
+             onChange={(e) => setSearchType(e.target.value as any)}
+             className="bg-black/40 border border-white/10 rounded-lg px-2 text-[9px] text-zinc-400 outline-none"
+           >
+             <option value="index">INDEX_SEEK</option>
+             <option value="linear">FULL_SCAN</option>
+           </select>
+           <button 
+             onClick={handleSearch}
+             disabled={isSearching || !inputValue}
+             className="px-4 py-1.5 bg-tokyo-blue text-ide-bg rounded-lg font-black text-[10px] hover:bg-tokyo-cyan transition-all"
+           >
+             EXEC_QUERY
+           </button>
+        </div>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center gap-2 flex-wrap content-center px-12">
+        {nodes.length === 0 && (
+          <div className="text-[10px] font-mono text-zinc-600 animate-pulse uppercase">Empty_Leaf_Nodes</div>
+        )}
+        {nodes.map((node, i) => (
+          <motion.div
+            key={node.id}
+            layout
+            className={cn(
+              "w-12 h-10 border flex items-center justify-center font-mono text-xs rounded transition-all duration-300",
+              activeIndex === i ? "bg-tokyo-yellow border-tokyo-yellow text-black scale-110 shadow-[0_0_15px_#e0af68]" : 
+              "bg-black/40 border-white/10 text-zinc-400"
+            )}
+          >
+            {node.val}
+          </motion.div>
+        ))}
+      </div>
+      
+      <div className="mt-6 grid grid-cols-2 gap-4">
+         <div className="p-3 bg-black/40 rounded-lg border border-white/5">
+            <div className="text-[7px] text-zinc-600 uppercase font-bold mb-1">Time Complexity</div>
+            <div className="text-xs font-mono text-tokyo-blue">{searchType === 'index' ? "O(log n)" : "O(n)"}</div>
+         </div>
+         <div className="p-3 bg-black/40 rounded-lg border border-white/5">
+            <div className="text-[7px] text-zinc-600 uppercase font-bold mb-1">Disk I/O Simulated</div>
+            <div className="text-xs font-mono text-tokyo-green">{activeIndex + 1} ops</div>
+         </div>
+      </div>
+    </div>
+  );
+};
+
+// --- Agent Swarm Visualizer ---
+const AgentSwarmEngine = () => {
+  const [agents, setAgents] = useState(Array.from({ length: 40 }).map((_, i) => ({
+    id: i,
+    x: Math.random() * 90 + 5,
+    y: Math.random() * 90 + 5,
+    vx: (Math.random() - 0.5) * 2,
+    vy: (Math.random() - 0.5) * 2
+  })));
+  const [commActive, setCommActive] = useState(true);
+  const target = { x: 50, y: 50 };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAgents(prev => prev.map(a => {
+        let nvx = a.vx;
+        let nvy = a.vy;
+
+        // Steering towards target
+        const dx = target.x - a.x;
+        const dy = target.y - a.y;
+        nvx += dx * 0.01;
+        nvy += dy * 0.01;
+
+        // Communication factor (swarm alignment)
+        if (commActive) {
+          nvx += (Math.random() - 0.5) * 0.5;
+          nvy += (Math.random() - 0.5) * 0.5;
+        }
+
+        // Limit speed
+        const speed = Math.hypot(nvx, nvy);
+        if (speed > 2) {
+          nvx = (nvx / speed) * 2;
+          nvy = (nvy / speed) * 2;
+        }
+
+        let nx = a.x + nvx;
+        let ny = a.y + nvy;
+
+        // Bounce off walls
+        if (nx < 0 || nx > 100) nvx *= -1;
+        if (ny < 0 || ny > 100) nvy *= -1;
+
+        return { ...a, x: nx, y: ny, vx: nvx, vy: nvy };
+      }));
+    }, 50);
+    return () => clearInterval(interval);
+  }, [commActive]);
+
+  return (
+    <div className="w-full h-full flex flex-col p-6 bg-[#0a0a0c] overflow-hidden relative group">
+      <div className="flex items-center justify-between z-10 mb-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-tokyo-green/10 border border-tokyo-green/20 rounded-lg">
+            <Zap className="w-5 h-5 text-tokyo-green" />
+          </div>
+          <div className="text-left">
+            <div className="text-xs font-bold text-white uppercase tracking-widest">Multi-Agent_Swarm_Orchestrator</div>
+            <div className="text-[9px] font-mono text-zinc-500">Protocol: P2P_Mesh_Gossip | Agents: 40</div>
+          </div>
+        </div>
+        <button 
+          onClick={() => setCommActive(!commActive)}
+          className={cn(
+            "px-4 py-1.5 rounded-lg border transition-all text-[10px] font-bold flex items-center gap-2",
+            commActive ? "bg-tokyo-green/10 border-tokyo-green text-tokyo-green" : "bg-white/5 border-white/10 text-zinc-500"
+          )}
+        >
+          {commActive ? "COMMUNICATION: ONLINE" : "COMMUNICATION: OFFLINE"}
+        </button>
+      </div>
+
+      <div className="flex-1 relative bg-black/60 rounded-xl border border-white/5 overflow-hidden">
+        {/* Radar lines */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+           <div className="w-full h-full" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        </div>
+
+        {/* Target */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+           <div className="w-8 h-8 border-2 border-dashed border-tokyo-red rounded-full animate-spin duration-[10s]" />
+           <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-1.5 h-1.5 bg-tokyo-red rounded-full shadow-[0_0_10px_#f7768e]" />
+           </div>
+        </div>
+
+        {/* Agents */}
+        {agents.map(a => (
+          <div 
+            key={a.id}
+            className="absolute w-1 h-1 bg-tokyo-blue rounded-full transition-transform duration-100"
+            style={{ 
+              left: `${a.x}%`, 
+              top: `${a.y}%`,
+              transform: `rotate(${Math.atan2(a.vy, a.vx)}rad) scaleX(2)`
+            }}
+          />
+        ))}
+        
+        {commActive && (
+          <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+             {agents.slice(0, 15).map((a, i) => {
+               const next = agents[(i + 1) % 15];
+               return <line key={i} x1={`${a.x}%`} y1={`${a.y}%`} x2={`${next.x}%`} y2={`${next.y}%`} stroke="#7aa2f7" strokeWidth="0.5" />;
+             })}
+          </svg>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// --- Encryption Rounds Visualizer ---
+const EncryptionEngine = () => {
+  const [input, setInput] = useState("SECRET");
+  const [round, setRound] = useState(0);
+  const [isAuto, setIsAuto] = useState(false);
+
+  const hexGrid = useMemo(() => {
+    return Array.from({ length: 16 }).map(() => Math.floor(Math.random() * 255).toString(16).padStart(2, '0'));
+  }, [round]);
+
+  useEffect(() => {
+    if (!isAuto) return;
+    const t = setInterval(() => setRound(r => (r + 1) % 10), 800);
+    return () => clearInterval(t);
+  }, [isAuto]);
+
+  return (
+    <div className="w-full h-full flex flex-col p-6 bg-[#0d0d12]">
+       <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-tokyo-red/10 border border-tokyo-red/20 rounded-lg">
+              <ShieldCheck className="w-5 h-5 text-tokyo-red" />
+            </div>
+            <div className="text-left">
+              <div className="text-xs font-bold text-white uppercase tracking-widest">AES-256_Cipher_Pipeline</div>
+              <div className="text-[9px] font-mono text-zinc-500">Standard: FIPS-197 | Rounds: 14</div>
+            </div>
+          </div>
+          <div className="flex gap-2">
+             <button onClick={() => setIsAuto(!isAuto)} className={cn("px-4 py-1.5 rounded-lg text-[10px] font-bold transition-all", isAuto ? "bg-tokyo-red text-white animate-pulse" : "bg-white/5 border-white/10 text-zinc-500")}>AUTO_ROUNDS</button>
+             <button onClick={() => setRound(r => (r + 1) % 10)} className="px-4 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] text-zinc-300 hover:text-white transition-all">NEXT_STEP</button>
+          </div>
+       </div>
+
+       <div className="flex-1 flex gap-8">
+          <div className="flex-1 grid grid-cols-4 gap-2 content-start">
+             {hexGrid.map((h, i) => (
+               <motion.div 
+                 key={i}
+                 initial={false}
+                 animate={{ 
+                   backgroundColor: round % 2 === 0 ? "rgba(122, 162, 247, 0.1)" : "rgba(247, 118, 142, 0.1)",
+                   borderColor: round % 2 === 0 ? "rgba(122, 162, 247, 0.3)" : "rgba(247, 118, 142, 0.3)"
+                 }}
+                 className="aspect-square border rounded-lg flex items-center justify-center font-mono text-sm text-zinc-400"
+               >
+                 {h.toUpperCase()}
+               </motion.div>
+             ))}
+          </div>
+
+          <div className="w-56 space-y-4">
+             <div className="bg-black/40 rounded-xl border border-white/5 p-4">
+                <div className="text-[8px] text-zinc-600 uppercase font-black mb-3">Round_Stage</div>
+                <div className="space-y-3">
+                   {[
+                     { label: 'SubBytes', active: round % 4 === 0 },
+                     { label: 'ShiftRows', active: round % 4 === 1 },
+                     { label: 'MixColumns', active: round % 4 === 2 },
+                     { label: 'AddRoundKey', active: round % 4 === 3 }
+                   ].map(s => (
+                     <div key={s.label} className="flex items-center gap-2">
+                        <div className={cn("w-1.5 h-1.5 rounded-full transition-colors", s.active ? "bg-tokyo-red shadow-[0_0_8px_#f7768e]" : "bg-zinc-800")} />
+                        <span className={cn("text-[10px] font-mono", s.active ? "text-white" : "text-zinc-600")}>{s.label}</span>
+                     </div>
+                   ))}
+                </div>
+             </div>
+             <div className="p-4 bg-tokyo-red/5 border border-tokyo-red/10 rounded-xl">
+                <div className="text-[7px] text-tokyo-red font-bold uppercase mb-1">Entropy_Density</div>
+                <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                   <motion.div animate={{ width: `${60 + (round * 4)}%` }} className="h-full bg-tokyo-red" />
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+  );
+};
+
 export const LabRenderer = ({ label }: { label: string }) => {
   const isMatrix = label.includes("matrix");
   const isSorting = label.includes("sort");
   const isNeural = label.includes("neural");
   const isVision = label.includes("vision");
   const isSpatial = label.includes("spatial");
+  const isVector = label.includes("vector");
+  const isChaos = label.includes("chaos") || label.includes("k8s");
+  const isBTree = label.includes("btree") || label.includes("index");
+  const isSwarm = label.includes("swarm") || label.includes("agent");
+  const isSecurity = label.includes("security") || label.includes("encrypt");
 
   return (
     <div className="h-full flex flex-col md:flex-row overflow-hidden border-t border-ide-border bg-ide-bg">
@@ -748,6 +1280,11 @@ export const LabRenderer = ({ label }: { label: string }) => {
            {isNeural && <NeuralEngine />}
            {isVision && <VisionEngine />}
            {isSpatial && <SpatialEngine />}
+           {isVector && <VectorDatabaseEngine />}
+           {isChaos && <KubernetesChaosEngine />}
+           {isBTree && <BTreeEngine />}
+           {isSwarm && <AgentSwarmEngine />}
+           {isSecurity && <EncryptionEngine />}
         </div>
         
         <div className="p-4 border-t border-ide-border bg-ide-sidebar/30 flex items-center justify-between">

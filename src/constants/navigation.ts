@@ -48,6 +48,11 @@ export const NAVIGATION_TREE: NavItem[] = [
       { id: "neural", label: "neural-nodes.py", type: "code", path: "lab/neural-nodes.py" },
       { id: "vision", label: "computer-vision.py", type: "code", path: "lab/computer-vision.py" },
       { id: "spatial", label: "spatial-ai.ts", type: "code", path: "lab/spatial-ai.ts" },
+      { id: "vector", label: "vector-search.ts", type: "code", path: "lab/vector-search.ts" },
+      { id: "chaos", label: "k8s-chaos.go", type: "code", path: "lab/k8s-chaos.go" },
+      { id: "btree", label: "database-index.sql", type: "code", path: "lab/database-index.sql" },
+      { id: "swarm", label: "swarm-intelligence.ts", type: "code", path: "lab/swarm-intelligence.ts" },
+      { id: "security", label: "aes-encryption.c", type: "code", path: "lab/aes-encryption.c" },
     ],
   },
 ];
