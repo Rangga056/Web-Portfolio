@@ -16,7 +16,11 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Muhammad Rangga Miftahul Falah | Software Engineer",
-  description: "Portfolio of Muhammad Rangga Miftahul Falah - Fullstack Developer & AI Automation Enthusiast.",
+  description:
+    "Portfolio of Muhammad Rangga Miftahul Falah - Fullstack Developer & AI Automation Enthusiast.",
+  verification: {
+    google: "fT-00BBi_MPf6xCfLtVDbET3LNw_5ZH393qYrwwprDE",
+  },
 };
 
 export default function RootLayout({
@@ -31,9 +35,7 @@ export default function RootLayout({
     >
       <body className="h-full overflow-hidden selection:bg-tokyo-blue selection:text-white bg-ide-bg text-foreground flex flex-col">
         <ShellProvider>
-          <ShellLayout>
-            {children}
-          </ShellLayout>
+          <ShellLayout>{children}</ShellLayout>
         </ShellProvider>
       </body>
     </html>
