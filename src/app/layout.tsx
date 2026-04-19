@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Muhammad Rangga Miftahul Falah | Software Engineer",
     description: "Portfolio of Muhammad Rangga Miftahul Falah - Fullstack Developer & AI Automation Enthusiast.",
-    url: "https://muhammadrangga.com",
+    url: "https://web-portfolio-nu-rose.vercel.app",
     siteName: "Muhammad Rangga Portfolio",
     images: [{ url: "/portfolio-homepage.png" }],
     type: "website",

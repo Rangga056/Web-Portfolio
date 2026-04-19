@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://muhammadrangga.com';
+  const baseUrl = 'https://web-portfolio-nu-rose.vercel.app';
   const contentDirs = ['projects', 'lab', 'me'];
   
   const staticRoutes = [
