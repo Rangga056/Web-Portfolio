@@ -16,8 +16,26 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Muhammad Rangga Miftahul Falah | Software Engineer",
-  description:
-    "Portfolio of Muhammad Rangga Miftahul Falah - Fullstack Developer & AI Automation Enthusiast.",
+  description: "Portfolio of Muhammad Rangga Miftahul Falah - Fullstack Developer & AI Automation Enthusiast.",
+  keywords: ["Software Engineer", "Fullstack Developer", "AI Automation", "Indonesia", "Muhammad Rangga"],
+  openGraph: {
+    title: "Muhammad Rangga Miftahul Falah | Software Engineer",
+    description: "Portfolio of Muhammad Rangga Miftahul Falah - Fullstack Developer & AI Automation Enthusiast.",
+    url: "https://muhammadrangga.com",
+    siteName: "Muhammad Rangga Portfolio",
+    images: [{ url: "/portfolio-homepage.png" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Muhammad Rangga Miftahul Falah | Software Engineer",
+    description: "Portfolio of Muhammad Rangga Miftahul Falah - Fullstack Developer & AI Automation Enthusiast.",
+    images: ["/portfolio-homepage.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   verification: {
     google: "fT-00BBi_MPf6xCfLtVDbET3LNw_5ZH393qYrwwprDE",
   },

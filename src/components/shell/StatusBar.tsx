@@ -48,7 +48,7 @@ export const StatusBar = () => {
            <a href="https://github.com/Rangga056" target="_blank" rel="noopener noreferrer" className="hover:text-tokyo-blue transition-colors text-[10px] font-mono">
              github
            </a>
-           <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-tokyo-blue transition-colors text-[10px] font-mono">
+           <a href="https://www.linkedin.com/in/muhammad-rangga-miftahul-falah-136595249/" target="_blank" rel="noopener noreferrer" className="hover:text-tokyo-blue transition-colors text-[10px] font-mono">
              linkedin
            </a>
         </div>
